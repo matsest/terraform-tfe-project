@@ -1,9 +1,36 @@
-module "example" {
+module "project" {
   source = "../"
 
-  name_prefix = "test"
+  organization = var.organization
+
+  name_prefix = var.name_prefix
+
+  environments = [
+    "dev",
+    "test",
+    "prod",
+  ]
+
+  workspaces = [
+    {
+      name = "network"
+      repo = "innovationnorway/terraform-infrastructure-network"
+      variables = {
+        cidr_block = "10.128.0.0/16"
+      }
+    },
+    {
+      name = "databricks"
+      repo = "innovationnorway/terraform-dataplatform-databricks"
+      variables = {
+        sku = "premium"
+      }
+    },
+  ]
+
+  oauth_token_id = var.oauth_token_id
 }
 
-output "example" {
-  value = module.example
+output "project" {
+  value = module.project
 }
