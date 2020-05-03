@@ -13,6 +13,13 @@ module "project" {
 
   workspaces = [
     {
+      name = "databricks"
+      repo = "innovationnorway/terraform-dataplatform-databricks"
+      variables = {
+        sku = "premium"
+      }
+    },
+    {
       name = "network"
       repo = "innovationnorway/terraform-infrastructure-network"
       variables = {
@@ -20,13 +27,20 @@ module "project" {
       }
     },
     {
-      name = "databricks"
-      repo = "innovationnorway/terraform-dataplatform-databricks"
+      name = "monitoring"
+      repo = "innovationnorway/terraform-infrastructure-monitoring"
       variables = {
-        sku = "premium"
+        retention_days = 30
       }
     },
   ]
+
+  run_triggers = {
+    databricks = ["network"]
+    monitoring = ["databricks", "network"]
+  }
+
+  queue_runs = ["network"]
 
   oauth_token_id = var.oauth_token_id
 }

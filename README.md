@@ -22,6 +22,13 @@ module "project" {
 
   workspaces = [
     {
+      name = "databricks"
+      repo = "innovationnorway/terraform-dataplatform-databricks"
+      variables = {
+        sku = "premium"
+      }
+    },
+    {
       name = "network"
       repo = "innovationnorway/terraform-infrastructure-network"
       variables = {
@@ -29,13 +36,20 @@ module "project" {
       }
     },
     {
-      name = "databricks"
-      repo = "innovationnorway/terraform-dataplatform-databricks"
+      name = "monitoring"
+      repo = "innovationnorway/terraform-infrastructure-monitoring"
       variables = {
-        sku = "premium"
+        retention_days = 30
       }
     },
   ]
+
+  run_triggers = {
+    databricks = ["network"]
+    monitoring = ["databricks", "network"]
+  }
+
+  queue_runs = ["network"]
 }
 ```
 
@@ -48,6 +62,10 @@ module "project" {
 * `environments` - (Required) A set of distinct environment names to be used in the project.
 
 * `workspaces` - (Required) A list of `workspaces` objects to be used in the project.
+
+* `run_triggers` - (Optional) A mapping from each workspace name to a list of sourceable workspace names.
+
+* `queue_runs` - (Optional) A list of workspace names for which all runs should be queued.
 
 ---
 
