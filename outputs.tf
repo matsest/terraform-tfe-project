@@ -9,6 +9,13 @@ output "environments" {
 }
 
 output "workspaces" {
-  value       = { for w in local.workspaces : w.name => w }
+  value = {
+    for w in local.workspaces : w.name => {
+      id        = tfe_workspace.main[w.name].id
+      name      = w.name
+      repo      = w.repo
+      variables = w.variables
+    }
+  }
   description = "A mapping from each workspace name to an object describing the workspace and it's variables."
 }
