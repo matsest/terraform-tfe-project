@@ -23,6 +23,6 @@ resource "tfe_run_trigger" "main" {
   for_each = {
     for t in local.run_triggers : "${t.workspace}-${t.sourceable}" => t
   }
-  workspace_external_id = tfe_workspace.main[each.value.workspace].id
-  sourceable_id         = tfe_workspace.main[each.value.sourceable].id
+  workspace_id  = tfe_workspace.main[each.value.workspace].id
+  sourceable_id = tfe_workspace.main[each.value.sourceable].id
 }
