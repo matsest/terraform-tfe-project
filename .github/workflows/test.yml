@@ -31,6 +31,6 @@ jobs:
         terraform apply -auto-approve -input=false
         terraform destroy -auto-approve -input=false
       env:
-        TF_var_organization: ${{ secrets.TFE_ORGANIZATION_TEST }}
-        TF_var_oauth_token_id: ${{ secrets.TFE_OAUTH_TOKEN_ID_TEST }}
+        TF_VAR_organization: ${{ secrets.TFE_ORGANIZATION_TEST }}
+        TF_VAR_oauth_token_id: ${{ secrets.TFE_OAUTH_TOKEN_ID_TEST }}
       working-directory: ./test
