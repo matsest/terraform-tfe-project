@@ -6,41 +6,32 @@ module "project" {
   name_prefix = var.name_prefix
 
   environments = [
-    "dev",
-    "test",
-    "prod",
+    "qux",
+    "quux",
   ]
 
   workspaces = [
     {
-      name = "databricks"
-      repo = "innovationnorway/terraform-dataplatform-databricks"
+      name = "foo"
+      repo = "innovationnorway/terraform-module-acctest"
       variables = {
-        sku = "premium"
+        name_prefix = var.name_prefix
       }
     },
     {
-      name = "network"
-      repo = "innovationnorway/terraform-infrastructure-network"
+      name = "bar"
+      repo = "innovationnorway/terraform-module-acctest"
       variables = {
-        cidr_block = "10.128.0.0/16"
-      }
-    },
-    {
-      name = "monitoring"
-      repo = "innovationnorway/terraform-infrastructure-monitoring"
-      variables = {
-        retention_days = 30
+        name_prefix = var.name_prefix
       }
     },
   ]
 
   run_triggers = {
-    databricks = ["network"]
-    monitoring = ["databricks", "network"]
+    foo = ["bar"]
   }
 
-  queue_runs = ["network"]
+  queue_runs = ["bar"]
 
   oauth_token_id = var.oauth_token_id
 }
