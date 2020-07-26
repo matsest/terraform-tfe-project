@@ -23,14 +23,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: innovationnorway/setup-terraform@v1
-    - uses: innovationnorway/terraform-login@v1
-      with:
-        token: ${{ secrets.TFE_TOKEN_TEST }}
     - run: |
         terraform init -input=false
         terraform apply -auto-approve -input=false
         terraform destroy -auto-approve -input=false
       env:
+        TFE_TOKEN: ${{ secrets.TFE_TOKEN_TEST }}
         TF_VAR_organization: ${{ secrets.TFE_ORGANIZATION_TEST }}
         TF_VAR_oauth_token_id: ${{ secrets.TFE_OAUTH_TOKEN_ID_TEST }}
       working-directory: ./test
