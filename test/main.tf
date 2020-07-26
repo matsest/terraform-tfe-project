@@ -6,8 +6,8 @@ module "project" {
   name_prefix = var.name_prefix
 
   environments = [
-    "dev",
-    "prod",
+    "qux",
+    "quux",
   ]
 
   workspaces = [
@@ -28,10 +28,10 @@ module "project" {
   ]
 
   run_triggers = {
-    bar = ["foo"]
+    foo = ["bar"]
   }
 
-  queue_runs = ["foo"]
+  queue_runs = ["bar"]
 
   oauth_token_id = var.oauth_token_id
 }
