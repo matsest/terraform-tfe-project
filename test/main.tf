@@ -36,6 +36,20 @@ module "project" {
   oauth_token_id = var.oauth_token_id
 }
 
-output "project" {
-  value = module.project
+data "testing_assertions" "project" {
+  subject = "Project module"
+
+  equal "environments" {
+    statement = "has expected environments"
+
+    got  = module.project.environments
+    want = toset(["qux", "quux"])
+  }
+
+  equal "workspaces" {
+    statement = "has expected workspaces"
+
+    got  = [for w in module.project.workspaces : w.name]
+    want = ["testacc-bar-quux", "testacc-bar-qux", "testacc-foo-quux", "testacc-foo-qux"]
+  }
 }
