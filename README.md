@@ -1,6 +1,6 @@
 # Terraform TFE Project
 
-![validate-test](https://github.com/innovationnorway/terraform-tfe-project/workflows/validate-test/badge.svg)
+![test](https://github.com/innovationnorway/terraform-tfe-project/workflows/test/badge.svg)
 
 This [Terraform](https://www.terraform.io/) module creates a project, which is a collection of [workspaces](https://www.terraform.io/docs/cloud/workspaces/index.html).
 
