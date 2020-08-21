@@ -8,6 +8,7 @@ module "project" {
   environments = [
     "qux",
     "quux",
+    "quuz"
   ]
 
   workspaces = [
@@ -25,10 +26,18 @@ module "project" {
         name_prefix = var.name_prefix
       }
     },
+    {
+      name = "baz"
+      repo = "innovationnorway/terraform-module-acctest"
+      variables = {
+        name_prefix = var.name_prefix
+      }
+    },
   ]
 
   run_triggers = {
     foo = ["bar"]
+    baz = ["foo", "bar"]
   }
 
   queue_runs = ["bar"]
@@ -36,6 +45,34 @@ module "project" {
   oauth_token_id = var.oauth_token_id
 }
 
-output "project" {
-  value = module.project
+data "testing_assertions" "project" {
+  subject = "Project module"
+
+  equal "environments" {
+    statement = "has expected environments"
+
+    got = module.project.environments
+    want = toset([
+      "quux",
+      "quuz",
+      "qux",
+    ])
+  }
+
+  equal "workspaces" {
+    statement = "has expected workspace names"
+
+    got = keys(module.project.workspaces)
+    want = [
+      "${var.name_prefix}-bar-quux",
+      "${var.name_prefix}-bar-quuz",
+      "${var.name_prefix}-bar-qux",
+      "${var.name_prefix}-baz-quux",
+      "${var.name_prefix}-baz-quuz",
+      "${var.name_prefix}-baz-qux",
+      "${var.name_prefix}-foo-quux",
+      "${var.name_prefix}-foo-quuz",
+      "${var.name_prefix}-foo-qux",
+    ]
+  }
 }
