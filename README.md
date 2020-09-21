@@ -8,7 +8,8 @@ This [Terraform](https://www.terraform.io/) module creates a project, which is a
 
 ```hcl
 module "project" {
-  source = "innovationnorway/project/tfe"
+  source  = "innovationnorway/project/tfe"
+  version = <insert latest release here>
 
   organization = "innovationnorway"
 
