@@ -13,22 +13,25 @@ module "project" {
 
   workspaces = [
     {
-      name = "foo"
-      repo = "innovationnorway/terraform-module-acctest"
+      name              = "foo"
+      repo              = "innovationnorway/terraform-module-acctest"
+      working_directory = ""
       variables = {
         name_prefix = var.name_prefix
       }
     },
     {
-      name = "bar"
-      repo = "innovationnorway/terraform-module-acctest"
+      name              = "bar"
+      repo              = "innovationnorway/terraform-module-acctest"
+      working_directory = ""
       variables = {
         name_prefix = var.name_prefix
       }
     },
     {
-      name = "baz"
-      repo = "innovationnorway/terraform-module-acctest"
+      name              = "baz"
+      repo              = "innovationnorway/terraform-module-acctest"
+      working_directory = ""
       variables = {
         name_prefix = var.name_prefix
       }
@@ -43,6 +46,8 @@ module "project" {
   queue_runs = ["bar"]
 
   oauth_token_id = var.oauth_token_id
+
+  terraform_version = "0.13.3"
 }
 
 data "testing_assertions" "project" {
