@@ -15,9 +15,10 @@ variable "environments" {
 
 variable "workspaces" {
   type = list(object({
-    name      = string
-    repo      = string
-    variables = map(string)
+    name              = string
+    repo              = string
+    working_directory = string
+    variables         = map(string)
   }))
   description = "A list of `workspaces` objects to be used in the project."
 }
@@ -50,9 +51,10 @@ locals {
   workspaces = flatten([
     for w in var.workspaces : [
       for e in var.environments : {
-        name      = format("%s-%s-%s", var.name_prefix, w.name, e)
-        repo      = w.repo
-        variables = w.variables
+        name              = format("%s-%s-%s", var.name_prefix, w.name, e)
+        repo              = w.repo
+        working_directory = w.working_directory
+        variables         = w.variables
       }
     ]
   ])

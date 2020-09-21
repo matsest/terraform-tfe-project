@@ -3,6 +3,8 @@ resource "tfe_workspace" "main" {
   name         = each.key
   organization = var.organization
 
+  working_directory = each.value.working_directory
+
   queue_all_runs = contains(local.queue_runs, each.key) ? true : false
 
   vcs_repo {
