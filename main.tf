@@ -11,6 +11,8 @@ resource "tfe_workspace" "main" {
     identifier     = each.value.repo
     oauth_token_id = var.oauth_token_id
   }
+
+  terraform_version = var.terraform_version
 }
 
 resource "tfe_variable" "main" {

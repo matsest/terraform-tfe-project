@@ -40,6 +40,12 @@ variable "oauth_token_id" {
   description = "The token ID of the VCS Connection (OAuth Conection Token) to use in Terraform Cloud."
 }
 
+variable "terraform_version" {
+  type        = string
+  description = "The version of Terraform to use for workspaces."
+  default     = "0.13.3"
+}
+
 locals {
   queue_runs = [
     for p in setproduct(var.queue_runs, var.environments) :
