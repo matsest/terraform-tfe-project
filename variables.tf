@@ -17,6 +17,7 @@ variable "workspaces" {
   type = list(object({
     name              = string
     repo              = string
+    branch            = string
     working_directory = string
     variables         = map(string)
   }))

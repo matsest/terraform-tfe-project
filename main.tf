@@ -9,6 +9,7 @@ resource "tfe_workspace" "main" {
 
   vcs_repo {
     identifier     = each.value.repo
+    branch         = each.value.branch
     oauth_token_id = var.oauth_token_id
   }
 
